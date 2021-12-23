@@ -19,7 +19,7 @@ export default function AppointmentBanner() {
         <Box style={appointmentBanner} sx={{ flexGrow: 1 }}>
             <Grid container spacing={2}>
                 <Grid item xs={12} md={6}>
-                    <img style={{ width: 400, marginTop: -110 }} src={doctor} />
+                    <img style={{ width: 400, marginTop: -110 }} src={doctor} alt='doctor'/>
                 </Grid>
                 <Grid item xs={12} md={6} sx={{
                     display: 'flex',
