@@ -10,7 +10,7 @@ export default function Home() {
             <Navigation/>
             <Banner/>
             <Services/>
-            <AppointmentBanner></AppointmentBanner>
+            <AppointmentBanner/>
         </div>
     )
 }

@@ -5,7 +5,7 @@ import doctor from './../../../images/doctor.png'
 import bg from './../../../images/appointment-bg.png'
 import { Button, Typography } from '@mui/material';
 
-
+// here use darken and backgroundBlendMode
 const appointmentBanner = {
     background: `url(${bg})`,
     backgroundColor: 'rgba(45, 73, 84,0.9)',
