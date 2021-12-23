@@ -2,7 +2,7 @@ import { Button, Container, Grid, TextField, Typography } from '@mui/material'
 import React, { useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import login from './../../images/login.png'
-export default function Login() {
+export default function Register() {
     const [loginData, setLoginData] = useState({})
     const handleOnChange = e => {
         const field = e.target.name;
@@ -13,8 +13,11 @@ export default function Login() {
 
     }
 
-    const handleLoginSubmit = (e) => {
-        alert('f')
+    const handleRegisterSubmit = (e) => {
+       if(loginData.password!==loginData.password2){
+         alert('your password did not match')
+         return  
+       }
         e.preventDefault();
     }
     return (
@@ -22,9 +25,9 @@ export default function Login() {
             <Grid container spacing={2}>
                 <Grid item sx={{ mt: 8 }} xs={12} md={6}>
                     <Typography variant="body1" gutterBottom>
-                        LogIn
+                        Register
                     </Typography>
-                    <form onSubmit={handleLoginSubmit}>
+                    <form onSubmit={handleRegisterSubmit}>
                         <TextField
                             type='email'
                             sx={{ width: '75%', m: 1 }}
@@ -43,19 +46,29 @@ export default function Login() {
                             name='password'
                             onChange={handleOnChange}
                         />
+                        <TextField
+                            sx={{ width: '75%', m: 1 }}
+                            type='password'
+                            id="standard-basic"
+                            label="Confirm Password"
+                            variant="standard"
+                            name='password2'
+                            onChange={handleOnChange}
+                        />
 
                         <Button
                             sx={{ width: '75%', m: 1 }}
                             variant='contained'
                             type='submit'
-                        >Login</Button>
+                        >Register</Button>
                         <NavLink
                             style={{ textDecoration: 'none' }}
-                            to='/register'>
+                            to='/login'
+                        >
                             <Button
                                 variant='text'
                                 type=''
-                            >New User? Please Register</Button></NavLink>
+                            >Already Registered? Please Login</Button></NavLink>
                     </form>
                 </Grid>
                 <Grid item xs={12} md={6}>

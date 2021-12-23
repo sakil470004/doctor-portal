@@ -8,6 +8,7 @@ import {
 import Home from './Pages/Home/Home/Home';
 import Appointment from './Pages/Appointment/Appointment';
 import Login from './Pages/Login/Login';
+import Register from './Pages/Login/Register';
 
 function App() {
   return (
@@ -25,6 +26,9 @@ function App() {
           </Route>
           <Route path="/login" >
             <Login />
+          </Route>
+          <Route path="/register" >
+            <Register />
           </Route>
         </Switch>
       </BrowserRouter>
