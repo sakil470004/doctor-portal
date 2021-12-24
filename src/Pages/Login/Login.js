@@ -8,12 +8,12 @@ import useAuth from '../../hooks/useAuth'
 import login from './../../images/login.png'
 export default function Login() {
     const [loginData, setLoginData] = useState({})
-    const { user, loginUser, isLoading, authError } = useAuth();
+    const { user, loginUser, isLoading, authError, signInWithGoogle } = useAuth();
 
     const location = useLocation()
     const history = useHistory()
 
-    const handleOnChange = e => {
+    const handleOnBlur = e => {
         const field = e.target.name;
         const value = e.target.value;
         const newLoginData = { ...loginData };
@@ -23,8 +23,11 @@ export default function Login() {
     }
 
     const handleLoginSubmit = (e) => {
-        loginUser(loginData.email, loginData.password,location,history)
+        loginUser(loginData.email, loginData.password, location, history)
         e.preventDefault();
+    }
+    const handleGoogleSignIn =()=>{
+        signInWithGoogle(location,history);
     }
     return (
         <Container>
@@ -41,7 +44,7 @@ export default function Login() {
                             label="Your Email"
                             variant="standard"
                             name='email'
-                            onChange={handleOnChange}
+                            onBlur={handleOnBlur}
                         />
                         <TextField
                             sx={{ width: '75%', m: 1 }}
@@ -50,7 +53,7 @@ export default function Login() {
                             label="Your Password"
                             variant="standard"
                             name='password'
-                            onChange={handleOnChange}
+                            onBlur={handleOnBlur}
                         />
 
                         <Button
@@ -66,6 +69,8 @@ export default function Login() {
                                 type=''
                             >New User? Please Register</Button></NavLink>
                     </form>
+                    <p>-----------------------------------------------</p>
+                    <Button onClick={handleGoogleSignIn} variant='contained'>Google Sign In</Button>
                     {isLoading && <CircularProgress />}
                     {(user.email && !authError) && <Alert severity='success'>User Login Successfully</Alert>}
                     {authError && <Alert severity='error'>{authError}</Alert>}

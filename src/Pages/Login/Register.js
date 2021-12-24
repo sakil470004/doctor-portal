@@ -3,13 +3,16 @@ import React, { useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import login from './../../images/login.png'
 import useAuth from './../../hooks/useAuth'
+import { useHistory } from 'react-router-dom'
 
 export default function Register() {
     const [loginData, setLoginData] = useState({})
 
     const { user, registerUser, isLoading, authError } = useAuth()
 
-    const handleOnChange = e => {
+    const history = useHistory()
+
+    const handleOnBlur = e => {
         const field = e.target.name;
         const value = e.target.value;
         const newLoginData = { ...loginData };
@@ -23,7 +26,7 @@ export default function Register() {
             alert('your password did not match')
             return
         }
-        registerUser(loginData.email, loginData.password)
+        registerUser(loginData.email, loginData.password,loginData.name, history)
         setLoginData({})
         e.reset()
         e.preventDefault();
@@ -37,13 +40,23 @@ export default function Register() {
                     </Typography>
                     {!isLoading && <form onSubmit={handleRegisterSubmit}>
                         <TextField
-                            type='email'
+
+                            sx={{ width: '75%', m: 1 }}
+                            id="standard-basic"
+                            label="Your Name"
+                            variant="standard"
+                            name='name'
+                            onBlur={handleOnBlur}
+                        />
+                        <TextField
+
                             sx={{ width: '75%', m: 1 }}
                             id="standard-basic"
                             label="Your Email"
                             variant="standard"
                             name='email'
-                            onChange={handleOnChange}
+                            type='email'
+                            onBlur={handleOnBlur}
                         />
                         <TextField
                             sx={{ width: '75%', m: 1 }}
@@ -52,7 +65,7 @@ export default function Register() {
                             label="Your Password"
                             variant="standard"
                             name='password'
-                            onChange={handleOnChange}
+                            onBlur={handleOnBlur}
                         />
                         <TextField
                             sx={{ width: '75%', m: 1 }}
@@ -61,7 +74,7 @@ export default function Register() {
                             label="Confirm Password"
                             variant="standard"
                             name='password2'
-                            onChange={handleOnChange}
+                            onBlur={handleOnBlur}
                         />
 
                         <Button
@@ -81,7 +94,7 @@ export default function Register() {
                     {isLoading && <CircularProgress />}
                     {(user.email && !authError) && <Alert severity='success'>User Created Successfully</Alert>}
                     {authError && <Alert severity='error'>{authError}</Alert>}
-                    
+
                 </Grid>
                 <Grid item xs={12} md={6}>
                     <img src={login} alt='login' style={{ width: '100%' }} />
