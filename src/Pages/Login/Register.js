@@ -1,9 +1,14 @@
-import { Button, Container, Grid, TextField, Typography } from '@mui/material'
+import { Alert, Button, CircularProgress, Container, Grid, TextField, Typography } from '@mui/material'
 import React, { useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import login from './../../images/login.png'
+import useAuth from './../../hooks/useAuth'
+
 export default function Register() {
     const [loginData, setLoginData] = useState({})
+
+    const { user, registerUser, isLoading, authError } = useAuth()
+
     const handleOnChange = e => {
         const field = e.target.name;
         const value = e.target.value;
@@ -14,10 +19,13 @@ export default function Register() {
     }
 
     const handleRegisterSubmit = (e) => {
-       if(loginData.password!==loginData.password2){
-         alert('your password did not match')
-         return  
-       }
+        if (loginData.password !== loginData.password2) {
+            alert('your password did not match')
+            return
+        }
+        registerUser(loginData.email, loginData.password)
+        setLoginData({})
+        e.reset()
         e.preventDefault();
     }
     return (
@@ -27,7 +35,7 @@ export default function Register() {
                     <Typography variant="body1" gutterBottom>
                         Register
                     </Typography>
-                    <form onSubmit={handleRegisterSubmit}>
+                    {!isLoading && <form onSubmit={handleRegisterSubmit}>
                         <TextField
                             type='email'
                             sx={{ width: '75%', m: 1 }}
@@ -69,7 +77,11 @@ export default function Register() {
                                 variant='text'
                                 type=''
                             >Already Registered? Please Login</Button></NavLink>
-                    </form>
+                    </form>}
+                    {isLoading && <CircularProgress />}
+                    {(user.email && !authError) && <Alert severity='success'>User Created Successfully</Alert>}
+                    {authError && <Alert severity='error'>{authError}</Alert>}
+                    
                 </Grid>
                 <Grid item xs={12} md={6}>
                     <img src={login} alt='login' style={{ width: '100%' }} />
