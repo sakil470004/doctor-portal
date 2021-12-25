@@ -2,7 +2,7 @@ import { Button, Grid, Paper, Typography } from '@mui/material'
 import React, { useState } from 'react'
 import BookingModal from '../BookingModal/BookingModal';
 
-export default function Booking({ booking ,date}) {
+export default function Booking({ booking ,date,setBookingSuccess}) {
     const { name, time, space } = booking;
 
     const [openBooking, setOpenBooking] = useState(false);
@@ -25,9 +25,11 @@ export default function Booking({ booking ,date}) {
                     <Button onClick={handleBookingOpen} variant="contained">BOOK APPOINTMENT</Button>
                 </Paper>
             </Grid>
-            <BookingModal handleBookingClose={handleBookingClose} openBooking={openBooking}
+            <BookingModal 
+            handleBookingClose={handleBookingClose} openBooking={openBooking}
             booking={booking}
             date={date}
+            setBookingSuccess={setBookingSuccess}
             ></BookingModal>
         </>
     )

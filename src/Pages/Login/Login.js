@@ -72,7 +72,7 @@ export default function Login() {
                     <p>-----------------------------------------------</p>
                     <Button onClick={handleGoogleSignIn} variant='contained'>Google Sign In</Button>
                     {isLoading && <CircularProgress />}
-                    {(user.email && !authError) && <Alert severity='success'>User Login Successfully</Alert>}
+                    {(user?.email && !authError) && <Alert severity='success'>User Login Successfully</Alert>}
                     {authError && <Alert severity='error'>{authError}</Alert>}
                 </Grid>
                 <Grid item xs={12} md={6}>
