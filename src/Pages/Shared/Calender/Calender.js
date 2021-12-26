@@ -1,5 +1,5 @@
 import React from 'react'
-import isWeekend from 'date-fns/isWeekend';
+// import isWeekend from 'date-fns/isWeekend';
 import TextField from '@mui/material/TextField';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
@@ -13,7 +13,7 @@ export default function Calender({date,setDate}) {
         
         displayStaticWrapperAs='desktop'
         value={date}
-        shouldDisableDate={isWeekend}
+        // shouldDisableDate={isWeekend}
         onChange={(newValue) => {
           setDate(newValue);
         }}
