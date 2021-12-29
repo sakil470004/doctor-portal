@@ -1,5 +1,5 @@
 import initializeFirebase from "../Pages/Login/Firebase/firebase.init";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut, GoogleAuthProvider, signInWithPopup,updateProfile  } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut, GoogleAuthProvider, signInWithPopup, updateProfile, getIdToken } from "firebase/auth";
 import { useEffect, useState } from "react";
 
 // initialize firebase app
@@ -9,6 +9,8 @@ const useFirebase = () => {
     const [user, setUser] = useState({});
     const [isLoading, setIsLoading] = useState(true)
     const [authError, setAuthError] = useState('');
+    const [admin, setAdmin] = useState(false);
+    const [token, setToken] = useState('');
 
     const auth = getAuth();
     const googleProvider = new GoogleAuthProvider();
@@ -20,16 +22,19 @@ const useFirebase = () => {
                 // Signed in 
                 const newUser = { email, displayName: name };
                 setUser(newUser);
-            //  send name to firebase after creation
-            updateProfile(auth.currentUser, {
-                displayName: name
-              }).then(() => {
-                // Profile updated!
-                // ...
-              }).catch((error) => {
-                // An error occurred
-                // ...
-              });
+                //save user to database 
+                saveUser(email, name, 'POST');
+
+                //  send name to firebase after creation
+                updateProfile(auth.currentUser, {
+                    displayName: name
+                }).then(() => {
+                    // Profile updated!
+                    // ...
+                }).catch((error) => {
+                    // An error occurred
+                    // ...
+                });
 
                 setAuthError('');
                 history.replace('/');
@@ -46,6 +51,7 @@ const useFirebase = () => {
         signInWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                 // Signed in 
+                // redirect
                 const destination = location.state?.from || '/';
                 history.replace(destination);
                 setAuthError('');
@@ -62,9 +68,14 @@ const useFirebase = () => {
             .then((result) => {
 
                 const user = result.user;
+                // call saveUser with put
+                saveUser(user.email, user.displayName, 'PUT');
+
+                setAuthError('');
+
+                // redirect
                 const destination = location.state?.from || '/';
                 history.replace(destination);
-                setAuthError('');
 
             }).catch((error) => {
                 setAuthError(error.message);
@@ -78,6 +89,9 @@ const useFirebase = () => {
             if (user) {
                 // const uid = user.uid;
                 setUser(user)
+                getIdToken(user)
+                    .then(idToken =>
+                        setToken(idToken))
             } else {
                 setUser({})
             }
@@ -85,6 +99,19 @@ const useFirebase = () => {
         });
         return () => unsubscribe;
     }, [])
+
+    // observe user admin or not
+    useEffect(() => {
+        fetch(`http://localhost:5000/users/${user.email}`)
+            .then(res => res.json())
+            .then(data => {
+                // console.log(data)
+                setAdmin(data.isAdmin)
+            })
+    }, [user.email])
+
+
+    // logout function
     const logout = () => {
         setIsLoading(true)
         signOut(auth).then(() => {
@@ -96,8 +123,22 @@ const useFirebase = () => {
         }).finally(() => setIsLoading(false));
     }
 
+    const saveUser = (email, displayName, method) => {
+        const user = { email, displayName };
+        fetch('http://localhost:5000/users', {
+            method: `${method}`,
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(user)
+        })
+            .then()
+    }
+
     return {
         user,
+        admin,
+        token,
         isLoading,
         authError,
         registerUser,

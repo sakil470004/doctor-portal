@@ -43,14 +43,12 @@ const bookings = [
 
 
 export default function AvailableAppointment({ date }) {
-const [bookingSuccess,setBookingSuccess]=useState(false)
+    const [bookingSuccess, setBookingSuccess] = useState(false)
     return (
         <Container>
 
-            <Typography sx={{ color: 'info.main', mb: 3 }} variant='h4'>Available Appointments on
+            <Typography sx={{ color: 'info.main', mb: 3 }} variant='h4'>Available Appointments on {date.toDateString()}</Typography>
             {bookingSuccess && <Alert severity='success'>Appointment Booked Success</Alert>}
-            {date.toDateString()}</Typography>
-
             <Grid container spacing={2}>
                 {
                     bookings.map(booking =>

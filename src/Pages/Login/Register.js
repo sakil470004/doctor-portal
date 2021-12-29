@@ -26,9 +26,8 @@ export default function Register() {
             alert('your password did not match')
             return
         }
-        registerUser(loginData.email, loginData.password,loginData.name, history)
+        registerUser(loginData.email, loginData.password, loginData.name, history)
         setLoginData({})
-        e.reset()
         e.preventDefault();
     }
     return (
@@ -42,7 +41,7 @@ export default function Register() {
                         <TextField
 
                             sx={{ width: '75%', m: 1 }}
-                            id="standard-basic"
+
                             label="Your Name"
                             variant="standard"
                             name='name'
@@ -51,7 +50,7 @@ export default function Register() {
                         <TextField
 
                             sx={{ width: '75%', m: 1 }}
-                            id="standard-basic"
+
                             label="Your Email"
                             variant="standard"
                             name='email'
@@ -61,7 +60,7 @@ export default function Register() {
                         <TextField
                             sx={{ width: '75%', m: 1 }}
                             type='password'
-                            id="standard-basic"
+
                             label="Your Password"
                             variant="standard"
                             name='password'
@@ -70,7 +69,7 @@ export default function Register() {
                         <TextField
                             sx={{ width: '75%', m: 1 }}
                             type='password'
-                            id="standard-basic"
+
                             label="Confirm Password"
                             variant="standard"
                             name='password2'

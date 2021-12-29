@@ -9,14 +9,18 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 
-export default function Appointments({date}) {
-    const { user } = useAuth();
+export default function Appointments({ date }) {
+    const { user,token } = useAuth();
     const [appointments, setAppointments] = useState([]);
 
     useEffect(() => {
         const url = `http://localhost:5000/appointments?email=${user.email}&date=${date}`
         // console.log(url)
-        fetch(url)
+        fetch(url, {
+            headers:{
+                'authorization':`Bearer ${token}`
+            }
+        })
             .then(res => res.json())
             .then(data => {
                 setAppointments(data)
@@ -27,7 +31,7 @@ export default function Appointments({date}) {
         <div>
             <h2>Appointments : {appointments.length}</h2>
             <TableContainer component={Paper}>
-                <Table sx={{  }} aria-label="Appointments table">
+                <Table sx={{}} aria-label="Appointments table">
                     <TableHead>
                         <TableRow>
                             <TableCell>Name</TableCell>
@@ -47,7 +51,7 @@ export default function Appointments({date}) {
                                 </TableCell>
                                 <TableCell align="right">{row.serviceName}</TableCell>
                                 <TableCell align="right">{row.time}</TableCell>
-                           
+
                             </TableRow>
                         ))}
                     </TableBody>

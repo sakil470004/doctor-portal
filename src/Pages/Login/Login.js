@@ -40,7 +40,6 @@ export default function Login() {
                         <TextField
                             type='email'
                             sx={{ width: '75%', m: 1 }}
-                            id="standard-basic"
                             label="Your Email"
                             variant="standard"
                             name='email'
@@ -49,7 +48,6 @@ export default function Login() {
                         <TextField
                             sx={{ width: '75%', m: 1 }}
                             type='password'
-                            id="standard-basic"
                             label="Your Password"
                             variant="standard"
                             name='password'
