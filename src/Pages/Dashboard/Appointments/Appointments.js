@@ -14,8 +14,8 @@ export default function Appointments({ date }) {
     const [appointments, setAppointments] = useState([]);
 
     useEffect(() => {
-        const url = `http://localhost:5000/appointments?email=${user.email}&date=${date}`
-        // console.log(url)
+        const url = `https://damp-island-23434.herokuapp.com/appointments?email=${user.email}&date=${date}`
+        // console.log(url,date)
         fetch(url, {
             headers:{
                 'authorization':`Bearer ${token}`
@@ -26,7 +26,7 @@ export default function Appointments({ date }) {
                 setAppointments(data)
                 // console.log(data)
             });
-    }, [date])
+    }, [date,token,user.email])
     return (
         <div>
             <h2>Appointments : {appointments.length}</h2>
@@ -50,7 +50,7 @@ export default function Appointments({ date }) {
                                     {row.patientName}
                                 </TableCell>
                                 <TableCell align="right">{row.serviceName}</TableCell>
-                                <TableCell align="right">{row.time}</TableCell>
+                                <TableCell align="right">{row.date} and {row.time}</TableCell>
 
                             </TableRow>
                         ))}

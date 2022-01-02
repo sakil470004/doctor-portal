@@ -20,11 +20,12 @@ const style = {
     boxShadow: 24,
     p: 4,
 };
-export default function BookingModal({ openBooking, handleBookingClose, booking, date,setBookingSuccess }) {
+export default function BookingModal({ openBooking, handleBookingClose, booking, date, setBookingSuccess }) {
     const { name, time } = booking;
     const { user } = useAuth()
     const initialInfo = { patientName: user.displayName, email: user.email, phone: '' };
     const [bookingInfo, setBookingInfo] = useState(initialInfo);
+
 
 
     const handleOnBlur = (e) => {
@@ -46,7 +47,7 @@ export default function BookingModal({ openBooking, handleBookingClose, booking,
             date: date.toLocaleDateString()
         }
         // send data to the server
-        fetch('http://localhost:5000/appointments', {
+        fetch('https://damp-island-23434.herokuapp.com/appointments', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'
@@ -57,7 +58,7 @@ export default function BookingModal({ openBooking, handleBookingClose, booking,
             .then(res => res.json())
             .then(data => {
                 if (data.insertedId) {
-                  setBookingSuccess(true);
+                    setBookingSuccess(true);
                     handleBookingClose()
                 }
             })

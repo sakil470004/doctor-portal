@@ -28,15 +28,17 @@ export default function Navigation() {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Doctors Portal
+            <NavLink style={{ textDecoration: 'none', color: 'white' }} to='/home'>
+              Doctors Portal
+            </NavLink>
           </Typography>
           <Link style={{ textDecoration: 'none', color: 'white' }} to='/appointment'><Button color="inherit">Appointment</Button></Link>
           {
             user?.email ?
               <Box>
-              <NavLink style={{ textDecoration: 'none', color: 'white' }} to='/dashboard'>
-                <Button color="inherit">Dashboard</Button>
-              </NavLink>
+                <NavLink style={{ textDecoration: 'none', color: 'white' }} to='/dashboard'>
+                  <Button color="inherit">Dashboard</Button>
+                </NavLink>
                 <Button onClick={logout} color="inherit">LogOut</Button>
               </Box>
               :

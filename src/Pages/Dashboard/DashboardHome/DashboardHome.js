@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Grid } from '@mui/material';
+import { Grid } from '@mui/material';
 import Calender from './../../Shared/Calender/Calender'
 import Appointments from '../Appointments/Appointments';
 import Box from '@mui/material/Box';
@@ -15,6 +15,7 @@ export default function DashboardHome() {
                         <Calender
                             date={date} setDate={setDate}
                         ></Calender>
+                        
                     </Grid>
                     <Grid item xs={12} sm={7}>
                         <Appointments date={date} />
