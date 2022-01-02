@@ -14,7 +14,7 @@ export default function Appointments({ date }) {
     const [appointments, setAppointments] = useState([]);
 
     useEffect(() => {
-        const url = `https://damp-island-23434.herokuapp.com/appointments?email=${user.email}&date=${date}`
+        const url = `https://damp-island-23434.herokuapp.com/appointments?email=${user.email}&date=${date.toLocaleDateString()}`
         // console.log(url,date)
         fetch(url, {
             headers:{
